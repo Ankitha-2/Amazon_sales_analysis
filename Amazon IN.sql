@@ -96,15 +96,15 @@ Select
 from orders
 group by product_id
 having sum(sale) > (select 
-							avg(total_sales) 
-					from 
-						(
-						Select
-								product_id,
-			       				sum(sale) as total_sales
-								from orders
-								group by product_id
-						) as average_sale)  
+			avg(total_sales) 
+			from 
+				(
+				Select
+					product_id,
+			       		sum(sale) as total_sales
+					from order
+					group by product_id
+				) as average_sale)  
 order by total_sales desc
 limit 5
 
@@ -114,13 +114,14 @@ With cte1
 as
 (
 	Select 
-			product_id,
+		product_id,
        		sum(sale) as total_sales
 from orders
 group by product_id
-), average_sale as (
-					Select avg(total_sales) as avg_sale from cte1
-				)
+), 
+average_sale as (
+		Select avg(total_sales) as avg_sale from cte1
+		)
 Select 
     product_id,
     total_sales
@@ -133,7 +134,7 @@ limit 5;
 
 /* -- Q3 List all orders along with the product details(product name, price) 
 and seller details (seller_name) for each order.
-	*/
+*/
 
 Select * from products
 Select * from sellers
@@ -176,11 +177,11 @@ Select * from products
 Select * from sellers
 
 Select 
-		p.product_name,
-		p.product_id,
-		s.seller_name,
-		s.seller_id,
-		avg(p.price) as avg_price
+	p.product_name,
+	p.product_id,
+	s.seller_name,
+	s.seller_id,
+	avg(p.price) as avg_price
 From orders as o
 join products as p
 on o.product_id = p.product_id
@@ -191,9 +192,9 @@ group by p.product_name, s.seller_name, p.product_id, s.seller_id
 -- Q7 Identify the top 3 sellers based on the total sales amount.
 
 Select 
-		s.seller_name,
-		s.seller_id,
-		sum(o.sale) as total_sales
+	s.seller_name,
+	s.seller_id,
+	sum(o.sale) as total_sales
 from orders as o
 join sellers as s
 on o.seller_id = s.seller_id
@@ -204,8 +205,8 @@ limit 3;
 --Q8 List all orders where the quantity sold is greater than the average quantity sold across all orders.
 
 Select 
-		order_id,
-		sum(quantity) as total_quantity 
+	order_id,
+	sum(quantity) as total_quantity 
 from orders
 group by order_id
 having sum(quantity) > (select avg(quantity) from orders)
@@ -214,9 +215,9 @@ order by total_quantity desc
 -- Q9 find the total sales amount for each category in each state
 
 Select
-		state,
-		category,
-		sum(sale) as total_sales
+	state,
+	category,
+	sum(sale) as total_sales
 from orders
 group by state, category
 order by total_sales desc
@@ -234,8 +235,8 @@ where o.product_id is null;
 -- Q11 Find the total sales amount for each seller, excluding the sales amount for orders with returns
 
 Select
-		o.seller_id,
-		sum(sale) as total_sales
+	o.seller_id,
+	sum(sale) as total_sales
 from orders as o
 left join returns as r
 on r.order_id = o.order_id
@@ -244,8 +245,9 @@ order by total_sales
 
 -- Q12 Identify the customers who have made orders in more than one state
 
-Select  o.customer_id,
-		c.customer_name
+Select  
+	o.customer_id,
+	c.customer_name
 from orders as o
 join customers as c
 on o.customer_id = c.customer_id
@@ -269,11 +271,11 @@ select max(quantity) from orders
 select avg(quantity) from orders
 
 Select *,
-		Case
-			when quantity > (select avg(quantity) from orders) then 'High Quantity'
-			when quantity = (select avg(quantity) from orders) then 'Medium Quantity' 
-			else 'Low Quantity'
-		End as Quantity_ordered
+	Case
+		when quantity > (select avg(quantity) from orders) then 'High Quantity'
+		when quantity = (select avg(quantity) from orders) then 'Medium Quantity' 
+		else 'Low Quantity'
+	End as Quantity_ordered
 from orders
 	
 /* -- Q14 Categorize products by price range:
@@ -281,7 +283,7 @@ Classify products as 'low', 'medium', or 'high' based on their prices
 price > 1000 'high price'
 price between 60 and 1000 'medium price'
 price > 68 'low price'
-	*/
+*/
 
 Select * from products
 
@@ -291,35 +293,33 @@ select max(price) from products
 
 select avg(price) from products
 
-
 Select *,
-		case
-			when price > (select avg(price) from products) then 'high price product'
-			when price = (select avg(price) from products) then 'medium price product'
-			else 'low price product'
-		End as product_category
+	case
+		when price > (select avg(price) from products) then 'high price product'
+		when price = (select avg(price) from products) then 'medium price product'
+		else 'low price product'
+	End as product_category
 from products
 order by price desc;
 
 or 
 
 Select *,
-		case
-			when price > 1000 then 'high price product'
-			when price between 68 and 1000 then 'medium price product'
-			else 'low price product'
-		End as product_category
+	case
+		when price > 1000 then 'high price product'
+		when price between 68 and 1000 then 'medium price product'
+		else 'low price product'
+	End as product_category
 from products
 order by price desc;
 
 /* --Q15 Identify returning customers: 
 Label customers as "returning" if they have placed more than one return; 
 otherwise, mark them as 'new'
-
--- if return >1 then 'returning' else new_cs
--- How many orders customers have placed
--- How many orders have customers returned join the return table with the orders table
--- Customer name joins with customers and orders table
+-If return >1 then 'returning' else new_cs
+-How many orders customers have placed
+-How many orders have customers returned join the return table with the orders table
+-Customer name joins with customers and orders table
 */
 
 Select * from orders;
@@ -339,9 +339,9 @@ order by total_orders desc;
 -- how many orders customers has returned join return table with  orders table
 
 Select 
-		o.customer_id,
-		count(r.return_id) as total_returns,
-		count(o.order_id) as total_orders
+	o.customer_id,
+	count(r.return_id) as total_returns,
+	count(o.order_id) as total_orders
 from orders as o
 left join returns as r
 on
@@ -352,10 +352,10 @@ order by total_orders desc;
 -- cutomers name join with customers and orders table
 
 Select
-		o.customer_id,
-		c.customer_name,
-		count(r.return_id) as total_returns,
-		count(o.order_id) as total_orders
+	o.customer_id,
+	c.customer_name,
+	count(r.return_id) as total_returns,
+	count(o.order_id) as total_orders
 from orders as o
 left join customers as c
 on o.customer_id = c.customer_id
@@ -367,10 +367,10 @@ order by total_orders desc;
 -- if return >1 then 'returning' else new_cs	
 
 Select 
-		o.customer_id,
-		c.customer_name,
-		count(r.return_id) as total_returns,
-		count(o.order_id) as total_orders,
+	o.customer_id,
+	c.customer_name,
+	count(r.return_id) as total_returns,
+	count(o.order_id) as total_orders,
 	case
 		when count(r.return_id) > 1 then 'returning_cs'
 		else 'new_cs'
@@ -393,21 +393,19 @@ SELECT
     SUM(o.sale) AS total_sales,
     CASE
         WHEN SUM(o.sale) > (
-            SELECT AVG(total_sales) 
-            FROM (
-                SELECT SUM(sale) AS total_sales
-                FROM orders
-                GROUP BY seller_id
-            ) AS subquery
+		SELECT AVG(total_sales) 
+            	FROM (
+                	SELECT SUM(sale) AS total_sales
+                	FROM orders
+                	GROUP BY seller_id
+           	 ) AS subquery
         ) THEN 'Top Performer'
         ELSE 'Average Performer'
     END AS performance
-FROM 
-    orders o
-JOIN 
-    sellers s ON o.seller_id = s.seller_id
-GROUP BY 
-    s.seller_id, s.seller_name
+FROM orders o
+JOIN sellers s 
+ON o.seller_id = s.seller_id
+GROUP BY s.seller_id, s.seller_name
 order by total_sales desc;
 
 OR
@@ -416,25 +414,25 @@ OR
 
 with Total_sale
 as (
-		Select
-				s.seller_name,
-				s.seller_id,
-				sum(o.sale) as total_sales
-		from orders o
-		join sellers s
-		on s.seller_id = o.seller_id
-		group by s.seller_name, s.seller_id
-	),
+	Select
+		s.seller_name,
+		s.seller_id,
+		sum(o.sale) as total_sales
+	from orders o
+	join sellers s
+	on s.seller_id = o.seller_id
+	group by s.seller_name, s.seller_id
+),
 Averagae_sale 
 as (
-		Select 
+	Select 
 		avg(total_sales) 
-		from Total_sale
+	from Total_sale
 	)
 Select
-		ts.seller_name,
-		ts.seller_id,
-		ts.total_sales,
+	ts.seller_name,
+	ts.seller_id,
+	ts.total_sales,
 	Case
 		when ts.total_sales > (Select avg(total_sales) from Total_sale) then 'Top Performer'
 		Else 'Average Performer'
@@ -450,9 +448,9 @@ Select *
 	from
 	( 
 		Select
-				product_id,
-				sum(sale) as total_sale,
-				rank() over(order by sum(sale) desc) as rn
+			product_id,
+			sum(sale) as total_sale,
+			rank() over(order by sum(sale) desc) as rn
 		from orders
 		group by product_id
 	) as subquery
@@ -464,16 +462,16 @@ Select *
 	from
 	(
 		Select 
-				p.product_id, 
-				p.product_name,
-				sum(o.sale) as total_sales,
-				rank() over (order by sum(o.sale) desc) as ranking,
-				row_number() over (order by sum(o.sale) desc) as RN,
-				dense_rank() over (order by sum(o.sale) desc) as DS
-	from orders o
-	left join products p
-	on p.product_id = o.product_id
-	group by 1, 2
+			p.product_id, 
+			p.product_name,
+			sum(o.sale) as total_sales,
+			rank() over (order by sum(o.sale) desc) as ranking,
+			row_number() over (order by sum(o.sale) desc) as RN,
+			dense_rank() over (order by sum(o.sale) desc) as DS
+		from orders o
+		left join products p
+		on p.product_id = o.product_id
+		group by 1, 2
 	) 
 where ranking <= 3
 	
@@ -483,11 +481,11 @@ showing their rank the corresponding customer id and the customer's full name
 */
 
 Select 
-		c.customer_id,
-		c.customer_name,
-		count(o.order_id) as total_orders,
-		rank() over(order by count(o.order_id) desc) as Customer_Rank
+	c.customer_id,
+	c.customer_name,
+	count(o.order_id) as total_orders,
+	rank() over(order by count(o.order_id) desc) as Customer_Rank
 from orders as o
 join customers as c
 on o.customer_id = c.customer_id
-group by 1,2
+group by 1,2;
