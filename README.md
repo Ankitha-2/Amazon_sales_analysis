@@ -4,7 +4,7 @@
 
 Welcome to the Amazon Sales Analysis Project! In this project, we delve into analyzing sales data from Amazon to extract valuable insights and trends that can aid in optimizing sales strategies, understanding customer behavior, and enhancing business operations.
 
-Introduction
+**Introduction**
 
 This project focuses on analyzing a comprehensive dataset containing Amazon sales records. The dataset includes details such as sales dates, customer information, product categories, and revenue figures. By leveraging SQL queries and advanced data analysis techniques, we aim to address various questions and uncover valuable insights from the dataset.
 
