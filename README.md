@@ -8,11 +8,11 @@ Welcome to the Amazon Sales Analysis Project! In this project, we delve into ana
 
 This project focuses on analyzing a comprehensive dataset containing Amazon sales records. The dataset includes details such as sales dates, customer information, product categories, and revenue figures. By leveraging SQL queries and advanced data analysis techniques, we aim to address various questions and uncover valuable insights from the dataset.
 
-Dataset Overview
+**Dataset Overview**
 
 The dataset used in this project comprises 9,990 rows of data, representing Amazon sales transactions. It encompasses a wide range of information, including customer details, product specifications, order information, and return records. Prior to analysis, the dataset underwent thorough preprocessing to handle missing values and ensure data quality, thereby providing a robust foundation for our analysis.
 
-Analysis Questions Resolved
+**Analysis Questions Resolved**
 
 During the analysis, the following key questions were addressed using SQL queries and data analysis techniques:
 
@@ -58,12 +58,12 @@ During the analysis, the following key questions were addressed using SQL querie
 40.	Find the top 3 products based on total_sales, along with their sales figures?
 41.	Identifying customer loyalty: Rank customers based on the  total number of orders placed, showing their rank the corresponding customer id and the customer's full name
 
-Entity-Relationship Diagram (ERD)
+**Entity-Relationship Diagram (ERD)**
 ![ERD Image](https://github.com/Ankitha-2/Amazon_sales_analysis/blob/main/ERD%20Amazon%20Database.png)
  
  An Entity-Relationship Diagram (ERD) has been created to visualize the relationships between the tables in the dataset. This diagram provides a clear understanding of the data structure and helps in identifying key entities and their attributes.
 
-Getting Started
+**Getting Started**
 To replicate the analysis or explore the dataset further, follow these steps:
 1.	Clone the repository to your local machine.
 2.	Ensure you have a SQL environment set up to execute queries.
@@ -71,7 +71,7 @@ To replicate the analysis or explore the dataset further, follow these steps:
 4.	Execute the SQL queries provided in the repository to analyze the data and derive insights.
 5.	Customize the analysis or queries as needed for your specific objectives.
 
-Conclusion
+**Conclusion**
 Through this project, we aim to provide valuable insights into Amazon sales trends, customer preferences, and other factors influencing e-commerce operations. By analyzing the dataset and addressing the key questions, we hope to assist stakeholders in making informed decisions and optimizing their sales strategies. Feel free to explore the repository and contribute to further analysis or enhancements!
 
 
